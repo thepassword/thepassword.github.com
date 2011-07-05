@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+    <head>               
+        <title>The Password</title>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8"> 
+        <meta name="apple-mobile-web-app-capable" content="yes">        
+        <link rel="apple-touch-icon-precomposed" href="Icons/Icon.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="Icons/Icon72.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="Icons/Icon114.png" />
+        
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a4.1/jquery.mobile-1.0a4.1.min.css" />
+		<script src="http://code.jquery.com/jquery-1.5.2.min.js"></script>
+		<script src="http://code.jquery.com/mobile/1.0a4.1/jquery.mobile-1.0a4.1.min.js"></script>
+		<style type="text/css">
+            #lenfields label {font-size:12px;}
+            #lenfields .ui-btn-inner {padding-left:20px;padding-right:20px;}
+            #respass  {color:#434343;}
+        </style>
+        <script type="text/javascript" src="js/md5-min.js"></script>
+        <script type="text/javascript">
+            function calculateResult(){
+                var len = $('input:radio[name="len"]:checked').val();
+                var input = $('#login').val()+'@'+$('#site').val()+$('#mpass').val();
+                var result = hex_md5(input).substr(0,len);
+                $("#respass").val(result);
+            }
+			$(function(){
+				$("#login,#site,#mpass").keyup(calculateResult);
+                $('input[name="len"]').change(calculateResult);
+			});
+		</script>		
+    </head>
+	<body>		
+        <div data-role="page" id="main_page" data-theme="a">
+            <div data-role="header" >
+                <h1 id="twi_acc">The Password</h1>
+            </div>
+            <div data-role="content">	
+                <label for="login">Login:</label>
+                <input type="text" name="login" id="login" value=""  />
+                <label for="site">Site:</label>
+                <input type="text" name="site" id="site" value=""  />
+
+                <label for="mpass">Master password:</label>
+                <input type="password" name="mpass" id="mpass" value=""  />
+
+                <label for="respass">Result password:</label>
+                <input type="text" name="respass" id="respass" value=""/>
+
+                <fieldset data-role="controlgroup" data-type="horizontal" id="lenfields">
+                    <legend>Length:</legend>
+
+
+                    <input type="radio" name="len" id="len-4" value="4" />
+                    <label for="len-4">&nbsp;4</label>
+
+                    <input type="radio" name="len" id="len-7" value="7" />
+                    <label for="len-7">&nbsp;7</label>
+
+                    <input type="radio" name="len" id="len-10" value="10"/>
+                    <label for="len-10">10</label>
+
+                    <input type="radio" name="len" id="len-13" value="13" />
+                    <label for="len-13">13</label>
+
+                    <input type="radio" name="len" id="len-32" value="32" checked="checked" />
+                    <label for="len-32">32</label>
+                    
+                 </fieldset>
+
+                <div style="text-align:center">
+                    <a href="http://bit.ly/thepassword">
+                        <img src="Icons/appstore.png" alt="Available on the App Store"/>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+	</body>
+</html>
