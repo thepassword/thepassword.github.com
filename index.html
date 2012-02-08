@@ -19,13 +19,16 @@
         <script type="text/javascript" src="js/md5-min.js"></script>
         <script type="text/javascript">
             var timer;
+            var cleanIntervalTimer;
             function calculateResult(){
                 var len = $('input:radio[name="len"]:checked').val();
                 var input = $('#login').val()+'@'+$('#site').val()+$('#mpass').val();
                 var result = hex_md5(input).substr(0,len);
+                $("#respass")[0].type = 'text';
                 $("#respass").val(result);
                 clearTimeout(timer);
                 timer = setTimeout(clearPassFileds,60000);
+                clearInterval(cleanIntervalTimer);
             }
 			$(function(){
 				$("#login,#site,#mpass").keyup(calculateResult);
@@ -37,6 +40,13 @@
                 $("#login,#site,#mpass,#respass").val('');
             }
             $(window).bind("beforeunload",clearPassFileds);
+            //prevent fields restore when restoring tab 
+            cleanIntervalTimer = setInterval(function(){
+                if ($('#respass').val() != ''){
+                clearPassFileds();
+                clearInterval(cleanIntervalTimer);
+                }
+            },50);
 		</script>		
     </head>
 	<body>		
@@ -54,7 +64,7 @@
                 <input type="password" name="mpass" id="mpass" value=""  />
 
                 <label for="respass">Result password:</label>
-                <input type="text" name="respass" id="respass" value=""/>
+                <input type="password" name="respass" id="respass" value="" autocomplete="off" />
 
                 <fieldset data-role="controlgroup" data-type="horizontal" id="lenfields">
                     <legend>Length:</legend>
