@@ -18,11 +18,14 @@
         </style>
         <script type="text/javascript" src="js/md5-min.js"></script>
         <script type="text/javascript">
+            var timer;
             function calculateResult(){
                 var len = $('input:radio[name="len"]:checked').val();
                 var input = $('#login').val()+'@'+$('#site').val()+$('#mpass').val();
                 var result = hex_md5(input).substr(0,len);
                 $("#respass").val(result);
+                clearTimeout(timer);
+                timer = setTimeout(clearPassFileds,60000);
             }
 			$(function(){
 				$("#login,#site,#mpass").keyup(calculateResult);
