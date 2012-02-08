@@ -28,6 +28,12 @@
 				$("#login,#site,#mpass").keyup(calculateResult);
                 $('input[name="len"]').change(calculateResult);
 			});
+            function clearPassFileds(){
+                $("#len-32").attr("checked",true);
+                $('input:radio[name="len"]').checkboxradio("refresh");
+                $("#login,#site,#mpass,#respass").val('');
+            }
+            $(window).bind("beforeunload",clearPassFileds);
 		</script>		
     </head>
 	<body>		
